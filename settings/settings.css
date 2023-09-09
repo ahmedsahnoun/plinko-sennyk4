@@ -1,0 +1,225 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+input,
+textarea {
+  font-family: "Rubik", sans-serif;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  font-size: 20px;
+}
+
+input {
+  border-radius: 10px;
+  width: 100%;
+  height: 35px;
+}
+
+textarea {
+  padding: 5px;
+  height: 80px;
+  width: 250px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+#setup {
+  display: grid;
+  padding: 30px;
+  height: 80vh;
+  width: 100vw;
+  gap: 10px;
+  grid-template-rows: 1fr 3fr;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas:
+    "allInputs submissions"
+    "optionFields submissions";
+}
+
+#setup > * {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+#submissions {
+  grid-area: submissions;
+  overflow-y: auto;
+  background-color: rgb(34, 34, 34);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+}
+.request {
+  position: relative;
+  background-color: rgb(75, 74, 74);
+  border-radius: 10px;
+  margin: 10px 0px;
+  width: 90%;
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  font-family: "Rubik", sans-serif;
+  font-weight: 900;
+  > h2 {
+    margin: 0px;
+  }
+}
+.delete {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  margin: 10px;
+  height: 30px;
+  aspect-ratio: 1/1;
+  display: grid;
+  place-content: center;
+  background-color: #b44b4b;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#optionFields {
+  grid-area: optionFields;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  background-color: rgb(34, 34, 34);
+}
+
+#allInputs {
+  grid-area: allInputs;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  background-color: rgb(34, 34, 34);
+}
+
+.inputContainer {
+  /* background-color: rgb(90, 90, 90); */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.title {
+  margin-bottom: 10px;
+  color: white;
+  font-family: "Rubik", sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.subType {
+  display: grid;
+  gap: 5px;
+  > div {
+    border-radius: 10px;
+    margin: 2px;
+    padding: 5px;
+    background-color: rgb(71, 71, 71);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 600;
+    color: white;
+    font-family: "Rubik", sans-serif;
+    > input {
+      width: 80px;
+    }
+  }
+}
+
+#saveButton {
+  flex: 1;
+  margin: 10px;
+  background-color: #00552d;
+  border: 0.125em solid #319667;
+  border-radius: 0.9375em;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  padding: 1em 2.3em;
+  text-align: center;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  &:hover {
+    color: #fff;
+    background-color: #018f4d;
+    border: 0.125em solid #49c48a;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+  &.unsaved {
+    background-color: #404400;
+    border: 0.125em solid #ecff44;
+  }
+}
+
+#password {
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  visibility: hidden;
+  > div {
+    background-color: #474747;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    > button {
+      margin-top: 10px;
+      border-radius: 10px;
+      height: 50px;
+      width: 100px;
+      font-size: 18px;
+      color: white;
+      background-color: rgb(10, 31, 148);
+    }
+  }
+}
+
+/* scroll bar */
+* {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+}
