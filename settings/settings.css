@@ -39,14 +39,15 @@ textarea {
 #setup {
   display: grid;
   padding: 30px;
-  height: 80vh;
-  width: 100vw;
+  height: 850px;
+  width: 1900px;
   gap: 10px;
   grid-template-rows: 1fr 3fr;
   grid-template-columns: 2fr 1fr;
   grid-template-areas:
     "allInputs submissions"
-    "optionFields submissions";
+    "optionFields submissions"
+    "optionFields clearButton";
 }
 
 #setup > * {
@@ -54,7 +55,30 @@ textarea {
   padding: 20px;
 }
 
+#clearButton {
+  grid-area: clearButton;
+  font-weight: 600;
+  font-size: 30px;
+  background-color: #cecb3b;
+  &:hover {
+    background-color: #e6e21d;
+    border: 0.125em solid #f1ef5c;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+  &.unsaved {
+    background-color: #404400;
+    border: 0.125em solid #ecff44;
+  }
+}
+
 #submissions {
+  min-width: 500px;
   grid-area: submissions;
   overflow-y: auto;
   background-color: rgb(34, 34, 34);
@@ -146,7 +170,6 @@ textarea {
 }
 
 #saveButton {
-  flex: 1;
   margin: 10px;
   background-color: #00552d;
   border: 0.125em solid #319667;

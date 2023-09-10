@@ -1,11 +1,12 @@
-SubAdd = null
-SubRemove = null
-SettingsUpdate = null
+var SubAdd = null
+var SubRemove = null
+var SettingsUpdate = null
+var readSubmissions = null
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const module = await import('./db.js');
-    const { addSubmission, removeSubmission, updateSettings } = module;
+    const { addSubmission, removeSubmission, updateSettings, readSubmissions } = module;
 
     SubAdd = addSubmission
     SubRemove = removeSubmission

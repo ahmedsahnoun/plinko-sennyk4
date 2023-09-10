@@ -56,10 +56,12 @@ canvas {
 
 #submissions {
   position: absolute;
-  top: 140px;
-  left: 1200px;
-  display: flex;
-  flex-direction: column;
+  bottom: 10px;
+  right: 10px;
+  /* display: flex;
+  flex-direction: column; */
+  /* display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
   padding: 20px;
   border-radius: 20px;
   background-color: rgb(34, 34, 34);
@@ -67,23 +69,25 @@ canvas {
   font-family: "Rubik", sans-serif;
   font-weight: 900;
   margin: 20px;
-  max-height: 800px;
-  width: 500px;
+  height: fit-content;
+  width: 350px;
   overflow: hidden;
 }
 
 .request {
   background-color: rgb(75, 74, 74);
   border-radius: 10px;
-  margin: 10px 0px;
-  padding: 10px;
+  margin: 8px 0px;
+  padding: 5px;
 }
 
 .request > h2 {
-  margin: 5px;
+  margin: 0px;
+  font-size: 23px;
 }
 
 .request > div {
+  font-size: 14px;
   margin: 5px;
 }
 

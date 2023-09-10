@@ -14,6 +14,8 @@ signInAnonymously(auth);
 const submissionsDB = ref(database, "submissionsDB")
 
 function addSubmission(x) {
+	const requests = submissions.getElementsByClassName("request")
+	if (requests.length === 5) requests[4].remove()
 	addDB(submissionsDB, x)
 	submissions.innerHTML = /*html*/`
 		<div data-key="${i}" class="request">
@@ -31,20 +33,30 @@ function updateSettings(data) {
 }
 
 // submission listener
-onValue(submissionsDB, (snap) => {
-	submissions.innerHTML = ""
-	const subVals = snap.val()
-	for (i in subVals) {
-		submissions.innerHTML = /*html*/`
+function readSubmissions() {
+	onValue(submissionsDB, (snap) => {
+		submissions.innerHTML = ""
+		const subVals = snap.val()
+		var counter = 0
+		for (var i in subVals) {
+			if (counter === 5) return
+			submissions.innerHTML = /*html*/`
 			<div data-key="${i}" class="request">
 			<h2 style="color:${subVals[i].color};">${subVals[i].option}</h1>
 			<div>${subVals[i].name}</div>
 			</div>` + submissions.innerHTML
-	}
-}, {
-	onlyOnce: true
-})
+			counter++
+		}
+	}, {
+		onlyOnce: true
+	})
+}
+readSubmissions()
 
+//submission delete listener
+onValue(ref(database, "deleteAlert"), (snap) => {
+	readSubmissions()
+})
 
 // settings listener
 onValue(ref(database, "SettingsDB"), (snap) => {
@@ -77,4 +89,4 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 
 })
 
-export { addSubmission, removeSubmission, updateSettings }
+export { addSubmission, removeSubmission, updateSettings, readSubmissions }
