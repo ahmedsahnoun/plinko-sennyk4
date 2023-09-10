@@ -98,7 +98,7 @@ function newParticle(name, color) {
   document.getElementsByTagName('body')[0].style.setProperty("visibility", "visible")
   var p = new Particle(start, 0, particleRadius, name, color);
   particles.push({ particle: p, logged: false });
-  particles2.push(1)
+  particlesCounter++
 }
 
 function draw() {
@@ -119,7 +119,7 @@ function draw() {
       colorIndex = index < 6 ? index : 11 - index
       SubAdd({ name: particles[i].particle.name, color: colorGradiant[colorIndex], option: options[index] })
       removeParticle(i)
-      if (!particles2.length) {
+      if (particlesCounter === 0) {
         particles = []
         timeoutId = setTimeout(() => {
           document.getElementsByTagName('body')[0].style.setProperty("visibility", "hidden")
@@ -132,5 +132,5 @@ function draw() {
 
 function removeParticle(i) {
   World.remove(world, particles[i].particle.body);
-  particles2.shift();
+  particlesCounter--
 }

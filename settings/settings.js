@@ -12,7 +12,8 @@ const tokenInput = document.getElementById("token")
 const idleInput = document.getElementById("idle")
 const intervalInput = document.getElementById("interval")
 const saveButton = document.getElementById("saveButton")
-
+var TwitchToken = null
+var TwitchClientId = null
 var subTypes = null
 
 try {
@@ -69,6 +70,8 @@ try {
 		tokenInput.value = snapVal.token
 		idleInput.value = snapVal.idle / 1000
 		intervalInput.value = snapVal.interval / 1000
+		TwitchToken = snapVal.TwitchToken
+		TwitchClientId = snapVal.TwitchClientId
 
 		// subTypes
 		subTypes = snapVal.subTypes
@@ -87,7 +90,6 @@ try {
 			options.push(current.value)
 		}
 
-
 		for (var i in subTypes) {
 			for (var j in subTypes[i])
 				if (j === "active" || j === "multiple") subTypes[i][j] = document.getElementById(i + '_' + j).checked
@@ -100,8 +102,8 @@ try {
 			interval: intervalInput.value * 1000,
 			options: options,
 			subTypes: subTypes,
-			TwitchToken: TwitchToken,
 			TwitchClientId: TwitchClientId,
+			TwitchToken: TwitchToken,
 		}
 		updateSettings(savedData)
 	}

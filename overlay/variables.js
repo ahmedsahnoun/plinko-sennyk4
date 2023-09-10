@@ -2,8 +2,6 @@ var idleTimer = null
 var queue = []
 var DBqueue = []
 var subTypes = null
-var TwitchToken = null
-var TwitchClientId = null
 var timeoutId = null
 
 var token = null
@@ -16,7 +14,7 @@ var Engine = Matter.Engine,
 var engine;
 var world;
 var particles = [];
-var particles2 = [];
+var particlesCounter = 0;
 var plinkos = [];
 var bounds = [];
 var options = []
