@@ -2,6 +2,8 @@ var idleTimer = null
 var queue = []
 var DBqueue = []
 var subTypes = null
+var TwitchToken = null
+var TwitchClientId = null
 var timeoutId = null
 
 var token = null
