@@ -11,29 +11,30 @@ function subscription() {
 
 	socket.on('event', (data) => {
 		if (data.type == 'subscriber') {
-			if (data.data.gifted)
+			if (subTypes[data.type].amount > 1)
 				return
-			console.log("sub")
-			if (subTypes.subscriber.active)
-				generateBall(data.data.username)
+			if (data.data.gifted && data.activityGroup)
+				return
+			if (subTypes.subscriber.active) {
+				generateBall(data.data.sender || data.data.username)
+				console.log("sub")
+			}
 		}
-		else if (data.type == 'communityGiftPurchase' || data.type == 'cheer') {
+		else if (data.type == 'cheer' || data.type == 'communityGiftPurchase') {
 			amount = data.data.amount
-			console.log("gift")
+			if (data.type === 'communityGiftPurchase') data.type = "subscriber"
 			if (subTypes[data.type].active) {
 				if (subTypes[data.type].multiple) {
-					for (i = 0; i < amount / subTypes[data.type].amount; i++) {
+					for (i = 0; i < Math.floor(amount / subTypes[data.type].amount); i++) {
 						generateBall(data.data.username)
 					}
 				}
 				else if (amount >= subTypes[data.type].amount) {
 					generateBall(data.data.username)
-
 				}
 			}
 		}
 	});
-
 }
 
 function generateBall(channelName) {

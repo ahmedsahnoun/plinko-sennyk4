@@ -101,7 +101,7 @@ try {
 		for (var i in subTypes) {
 			for (var j in subTypes[i])
 				if (j === "active" || j === "multiple") subTypes[i][j] = document.getElementById(i + '_' + j).checked
-				else subTypes[i][j] = document.getElementById(i + '_' + j).value
+				else subTypes[i][j] = Number(document.getElementById(i + '_' + j).value)
 		}
 
 		const savedData = {
@@ -116,7 +116,8 @@ try {
 		updateSettings(savedData)
 	}
 }
-catch {
+catch (error) {
+	console.log(error)
 	document.getElementById("password").style.visibility = "visible"
 	document.getElementById("configConfirm").onclick = () => {
 		localStorage.setItem("config", document.getElementById("config").value)

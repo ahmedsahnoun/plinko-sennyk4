@@ -38,12 +38,12 @@ function readSubmissions() {
 		submissions.innerHTML = ""
 		const subVals = snap.val()
 		var counter = 0
-		for (var i in subVals) {
+		for (var i of Object.values(subVals).slice(-5)) {
 			if (counter === 5) return
 			submissions.innerHTML = /*html*/`
-			<div data-key="${i}" class="request">
-			<h2 style="color:${subVals[i].color};">${subVals[i].option}</h1>
-			<div>${subVals[i].name}</div>
+			<div class="request">
+			<h2 style="color:${i.color};">${i.option}</h1>
+			<div>${i.name}</div>
 			</div>` + submissions.innerHTML
 			counter++
 		}
