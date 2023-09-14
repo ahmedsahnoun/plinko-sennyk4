@@ -54,43 +54,6 @@ canvas {
   font-weight: 900;
 }
 
-#submissions {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  /* display: flex;
-  flex-direction: column; */
-  /* display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
-  padding: 20px;
-  border-radius: 20px;
-  background-color: rgb(34, 34, 34);
-  color: rgb(255, 255, 255);
-  font-family: "Rubik", sans-serif;
-  font-weight: 900;
-  margin: 20px;
-  height: fit-content;
-  width: 350px;
-  overflow: hidden;
-}
-
-.request {
-  background-color: rgb(75, 74, 74);
-  border-radius: 10px;
-  margin: 8px 0px;
-  padding: 5px;
-}
-
-.request > h2 {
-  margin: 0px;
-  font-size: 23px;
-}
-
-.request > div {
-  font-size: 14px;
-  margin: 5px;
-}
-
 /* scroll bar */
 * {
   &::-webkit-scrollbar {

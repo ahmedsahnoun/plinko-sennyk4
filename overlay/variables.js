@@ -28,5 +28,3 @@ var plinkoRadius = 3;
 var boundryHeight = 50;
 var start = 0
 var ratio = 1080 / 1920
-
-submissions = document.getElementById("submissions")
