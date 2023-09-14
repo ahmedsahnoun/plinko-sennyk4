@@ -23,6 +23,7 @@ function makeVisible(time) {
 makeVisible(0)
 
 // settings listener
+var subTypes = null
 onValue(ref(database, "SettingsDB"), (snap) => {
 	const snapVal = snap.val()
 
