@@ -29,6 +29,9 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	// idle
 	visibilityTimer = snapVal.idle
 
+	//subTypes
+	subTypes = snapVal.subTypes
+
 	//token
 	token = snapVal.token
 	if (socket) socket.close()
@@ -71,7 +74,10 @@ function subscription() {
 
 	socket.on('event', (data) => {
 		if (["subscriber", "cheer", "communityGiftPurchase"].includes(data.type)) {
-			makeVisible(0)
+			amount = data.data.amount
+			if (data.type === 'communityGiftPurchase') data.type = "subscriber"
+			if (subTypes[data.type].active && amount >= subTypes[data.type].amount)
+				makeVisible(0)
 		}
 	})
 }
