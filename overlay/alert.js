@@ -1,4 +1,4 @@
-const subscription = (token, url) => {
+const twitchAlert = (token, url) => {
 	if (url) ws = new WebSocket(url);
 	else ws = new WebSocket('wss://eventsub.wss.twitch.tv/ws');
 
@@ -8,7 +8,7 @@ const subscription = (token, url) => {
 		ws.addEventListener('message', (event) => {
 			message = JSON.parse(event.data)
 			type = message.metadata.message_type
-			clientId = "o8psoh7xmn5zflmbj5g41vb7o3w8kb"
+			clientId = "28t02hp8iq790sgyixrlonmrqbu8z6"
 			channelName = 'ziedyt';
 
 			if (type === "session_welcome") {
@@ -78,7 +78,7 @@ const subscription = (token, url) => {
 			if (type === "session_reconnect") {
 				reconnect_url = JSON.parse(event.data).payload.session.reconnect_url
 				ws.close()
-				subscription(token, reconnect_url)
+				twitchAlert(token, reconnect_url)
 			}
 		});
 	});

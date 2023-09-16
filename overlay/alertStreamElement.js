@@ -1,4 +1,5 @@
 var socket = null
+var gifted = {}
 function subscription() {
 	socket = io('https://realtime.streamelements.com', {
 		transports: ['websocket']
@@ -10,19 +11,31 @@ function subscription() {
 	})
 
 	socket.on('event', (data) => {
+		amount = data.data.amount
 		if (data.type == 'subscriber') {
-			if (subTypes[data.type].amount > 1)
+			if (!subTypes.subscriber.active)
 				return
-			if (data.data.gifted && data.activityGroup)
+			if (subTypes[data.type].amount === 1) {
+				generateBall(data.data.username)
 				return
-			if (subTypes.subscriber.active) {
-				generateBall(data.data.sender || data.data.username)
-				console.log("sub")
+			}
+			if (data.activityGroup) {
+				if (!(data.activityGroup in gifted)) {
+					gifted[data.activityGroup] = {
+						counter: 1, timeOut: setTimeout(
+							() => delete gifted[data.activityGroup]
+							, 120000)
+					}
+				}
+				else {
+					gifted[data.activityGroup].counter++
+				}
+				if (gifted[data.activityGroup].counter % subTypes[data.type].amount === 0) {
+					generateBall(data.data.sender)
+				}
 			}
 		}
-		else if (data.type == 'cheer' || data.type == 'communityGiftPurchase') {
-			amount = data.data.amount
-			if (data.type === 'communityGiftPurchase') data.type = "subscriber"
+		else if (data.type == 'cheer') {
 			if (subTypes[data.type].active) {
 				if (subTypes[data.type].multiple) {
 					for (i = 0; i < Math.floor(amount / subTypes[data.type].amount); i++) {
@@ -63,4 +76,17 @@ function generateBall(channelName) {
 					queue.push({ name: response.data[0].user_name, color: response.data[0].color })
 				}).catch(() => { queue.push({ name: channelName }) })
 		}).catch(() => { queue.push({ name: channelName }) })
+}
+
+function getGifter(channel) {
+	headers = {
+		'Authorization': `Bearer ${token}`,
+		'Content-Type': 'application/json',
+	};
+	apiUrl = `https://api.streamelements.com/kappa/v2/sessions/${channel}`;
+	fetch(apiUrl, { headers })
+		.then(response => response.json())
+		.then(response => {
+			console.log(response)
+		})
 }
