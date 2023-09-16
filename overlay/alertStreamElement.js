@@ -24,10 +24,14 @@ function subscription() {
 					gifted[data.activityGroup] = {
 						counter: 1, timeOut: setTimeout(
 							() => delete gifted[data.activityGroup]
-							, 120000)
+							, 60000)
 					}
 				}
 				else {
+					clearTimeout(gifted[data.activityGroup].timeOut)
+					gifted[data.activityGroup].timeOut = setTimeout(
+						() => delete gifted[data.activityGroup]
+						, 60000)
 					gifted[data.activityGroup].counter++
 				}
 				if (gifted[data.activityGroup].counter % subTypes[data.type].amount === 0) {
