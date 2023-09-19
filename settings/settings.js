@@ -30,7 +30,6 @@ try {
 
 	function clearSubmissions() {
 		remove(ref(database, "submissionsDB"))
-		set(ref(database, "deleteAlert"), Math.random())
 	}
 
 	document.getElementById("clearButton").onclick = clearSubmissions
@@ -38,7 +37,6 @@ try {
 	function removeSubmission(id) {
 		console.log(id.target.dataset.key)
 		remove(ref(database, "submissionsDB/" + id.target.dataset.key))
-		set(ref(database, "deleteAlert"), Math.random())
 	}
 
 	function updateSettings(data) {
