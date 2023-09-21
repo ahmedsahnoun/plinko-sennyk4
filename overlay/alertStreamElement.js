@@ -39,7 +39,7 @@ function subscription() {
 				}
 			}
 		}
-		else if (data.type == 'cheer') {
+		else if (data.type == 'cheer' || data.type == 'tip') {
 			if (subTypes[data.type].active) {
 				if (subTypes[data.type].multiple) {
 					for (i = 0; i < Math.floor(amount / subTypes[data.type].amount); i++) {
