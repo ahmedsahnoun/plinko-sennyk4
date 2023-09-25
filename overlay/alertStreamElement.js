@@ -13,7 +13,9 @@ function subscription() {
 	socket.on('event', (data) => {
 		amount = data.data.amount
 		if (data.type == 'subscriber') {
-			if (!subTypes.subscriber.active)
+			if (data.data.tier === "3000" && subTypes["subscriber3000"].active)
+				data.type = "subscriber3000"
+			if (!subTypes[data.type].active)
 				return
 			if (subTypes[data.type].amount === 1) {
 				generateBall(data.data.username)
