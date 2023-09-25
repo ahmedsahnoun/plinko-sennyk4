@@ -19,6 +19,8 @@ function subscription() {
 				generateBall(data.data.username)
 				return
 			}
+			if (subTypes[data.type].amount <= 0)
+				return
 			if (data.activityGroup) {
 				if (!(data.activityGroup in gifted)) {
 					gifted[data.activityGroup] = {
@@ -42,6 +44,8 @@ function subscription() {
 		else if (data.type == 'cheer' || data.type == 'tip') {
 			if (subTypes[data.type].active) {
 				if (subTypes[data.type].multiple) {
+					if (subTypes[data.type].amount <= 0)
+						return
 					for (i = 0; i < Math.floor(amount / subTypes[data.type].amount); i++) {
 						generateBall(data.data.username)
 					}
