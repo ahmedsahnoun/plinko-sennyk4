@@ -15,6 +15,8 @@ function subscription() {
 		if (data.type == 'subscriber') {
 			if (data.data.tier === "3000" && subTypes["subscriber3000"].active)
 				data.type = "subscriber3000"
+			if (data.data.tier === "2000" && subTypes["subscriber2000"].active)
+				data.type = "subscriber2000"		
 			if (!subTypes[data.type].active)
 				return
 			if (subTypes[data.type].amount === 1) {
