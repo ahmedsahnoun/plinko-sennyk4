@@ -42,8 +42,8 @@ function setup() {
   world.gravity.y = 1.8;
   spacing = width / 12 - 0.8
 
-  for (var j = 3; j <= rows; j++) {
-    for (var i = 0; i < j; i++) {
+  for (let j = 3; j <= rows; j++) {
+    for (let i = 0; i < j; i++) {
       var x = (width / 2 - (j - 1) * spacing / 2) + i * spacing;
       var y = -40 + j * spacing;
       var p = new Plinko(x, y, plinkoRadius);
@@ -65,7 +65,7 @@ function setup() {
   bounds.push(b);
 
 
-  for (var i = 0; i < options.length + 1; i++) {
+  for (let i = 0; i < options.length + 1; i++) {
     var x = i * width / options.length;
     var h = (i % options.length === 0) ? height : boundryHeight;
     var w = 0.1;
@@ -102,13 +102,13 @@ function newParticle(name, color) {
 function draw() {
   clear()
   Engine.update(engine, 1000 / 30);
-  for (var i = 0; i < plinkos.length; i++) {
+  for (let i = 0; i < plinkos.length; i++) {
     plinkos[i].show();
   }
   // for (var i = 0; i < bounds.length; i++) {
   //   bounds[i].show();
   // }
-  for (var i = 0; i < particles.length; i++) {
+  for (let i = 0; i < particles.length; i++) {
     if (!particles[i].logged) particles[i].particle.show();
     if (particles[i].particle.landed(boundryHeight) && !particles[i].logged) {
       particles[i].logged = true

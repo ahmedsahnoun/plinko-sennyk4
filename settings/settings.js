@@ -4,7 +4,7 @@ import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/1
 
 
 var options = []
-for (var i = 1; i <= 12; i++) { options.push(`option ${i}`) }
+for (let i = 1; i <= 12; i++) { options.push(`option ${i}`) }
 
 const submissions = document.getElementById("submissions")
 const optionFields = document.getElementById("optionFields")
@@ -24,14 +24,16 @@ try {
 	signInAnonymously(auth);
 	const submissionsDB = ref(database, "submissionsDB")
 
-	function addSubmission(x) {
-		addDB(submissionsDB, x)
+	function ManualSubmission() {
+		set(ref(database, "Manual"), true)
 	}
 
 	function clearSubmissions() {
 		remove(ref(database, "submissionsDB"))
 	}
 
+	document.getElementById("Manual").onclick = ManualSubmission
+	
 	document.getElementById("clearButton").onclick = clearSubmissions
 
 	function removeSubmission(id) {
@@ -47,7 +49,7 @@ try {
 	onValue(submissionsDB, (snap) => {
 		submissions.innerHTML = ""
 		const snapVal = snap.val()
-		for (i in snapVal) {
+		for (let i in snapVal) {
 			submissions.innerHTML = /*html*/`
 			<div class="request">
 				<h2 style="color:${snapVal[i].color};">${snapVal[i].option}</h1>
@@ -55,7 +57,7 @@ try {
 				<div  data-key="${i}" class="delete">X</div>
 			</div>` + submissions.innerHTML
 		}
-		for (i of document.getElementsByClassName("delete")) i.onclick = removeSubmission
+		for (let i of document.getElementsByClassName("delete")) i.onclick = removeSubmission
 	})
 
 	// settings listener
@@ -64,7 +66,7 @@ try {
 
 		// options
 		optionFields.innerHTML = ""
-		for (var i = 0; i < snapVal.options.length; i++) {
+		for (let i = 0; i < snapVal.options.length; i++) {
 			optionFields.innerHTML +=/*html*/`
 		<div class="inputContainer">
 			<div class="title">Option ${i + 1}</div>
@@ -81,8 +83,8 @@ try {
 
 		// subTypes
 		subTypes = snapVal.subTypes
-		for (var i in subTypes) {
-			for (var j in subTypes[i])
+		for (let i in subTypes) {
+			for (let j in subTypes[i])
 				if (j === "active" || j === "multiple") document.getElementById(i + '_' + j).checked = snapVal.subTypes[i][j]
 				else document.getElementById(i + '_' + j).value = snapVal.subTypes[i][j]
 		}
@@ -91,13 +93,13 @@ try {
 	saveButton.onclick = () => {
 
 		options = []
-		for (var i = 0; i < 12; i++) {
+		for (let i = 0; i < 12; i++) {
 			var current = document.getElementById(`option ${i}`)
 			options.push(current.value)
 		}
 
-		for (var i in subTypes) {
-			for (var j in subTypes[i])
+		for (let i in subTypes) {
+			for (let j in subTypes[i])
 				if (j === "active" || j === "multiple") subTypes[i][j] = document.getElementById(i + '_' + j).checked
 				else subTypes[i][j] = Number(document.getElementById(i + '_' + j).value)
 		}

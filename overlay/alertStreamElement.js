@@ -13,10 +13,8 @@ function subscription() {
 	socket.on('event', (data) => {
 		amount = data.data.amount
 		if (data.type == 'subscriber') {
-			if (data.data.tier === "3000" && subTypes["subscriber3000"].active)
-				data.type = "subscriber3000"
-			if (data.data.tier === "2000" && subTypes["subscriber2000"].active)
-				data.type = "subscriber2000"		
+			if (data.data.tier === "3000" || data.data.tier === "2000")
+				data.type += data.data.tier
 			if (!subTypes[data.type].active)
 				return
 			if (subTypes[data.type].amount === 1) {
@@ -50,7 +48,7 @@ function subscription() {
 				if (subTypes[data.type].multiple) {
 					if (subTypes[data.type].amount <= 0)
 						return
-					for (i = 0; i < Math.floor(amount / subTypes[data.type].amount); i++) {
+					for (let i = 0; i < Math.floor(amount / subTypes[data.type].amount); i++) {
 						generateBall(data.data.username)
 					}
 				}

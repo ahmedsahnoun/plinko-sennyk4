@@ -48,7 +48,7 @@ function readSubmissions() {
 		submissions.innerHTML = ""
 		const subVals = snap.val()
 		var counter = 0
-		for (var i of Object.values(subVals).slice(-5)) {
+		for (let i of Object.values(subVals).slice(-5)) {
 			if (counter === 5) return
 			submissions.innerHTML = /*html*/`
 			<div class="request">

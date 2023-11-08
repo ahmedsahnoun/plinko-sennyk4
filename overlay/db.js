@@ -33,7 +33,7 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	clearInterval(queueLauncher)
 	queueLauncher = setInterval(() => {
 		if (queue.length) {
-			i = queue.shift()
+			const i = queue.shift()
 			newParticle(i.name, i.color)
 		}
 	}, snapVal.interval)
@@ -54,6 +54,15 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	if (socket) socket.close()
 	subscription()
 
+})
+
+//Manual listener
+onValue(ref(database, "Manual"), (snap) => {
+	const snapVal = snap.val()
+	if (snapVal) {
+		generateBall("SennyK4")
+		set(ref(database, "Manual"), false)
+	}
 })
 
 export { addSubmission, removeSubmission, updateSettings }

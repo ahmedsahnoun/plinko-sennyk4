@@ -14,7 +14,7 @@ const isElementLoaded = async selector => {
 
 isElementLoaded("canvas").then(() => {
 	var textOption = ""
-	for (var option in options) {
+	for (let option in options) {
 		var colorIndex = option < 6 ? option : 11 - option
 		textOption += /*html*/`<div style="background-color:${colorGradiant[colorIndex]};" >${Number(option) + 1}</div>`
 	}
