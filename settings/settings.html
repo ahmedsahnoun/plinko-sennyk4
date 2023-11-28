@@ -4,6 +4,7 @@
 <head>
 	<meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
 	<link rel="stylesheet" type="text/css" href="settings.css">
+	<link rel="stylesheet" type="text/css" href="slider.css">
 	<meta charset="utf-8" />
 </head>
 
@@ -29,9 +30,15 @@
 				<div class="title">Spawn Timer (seconds)</div>
 				<input id="interval" type="number" step="0.1" min="0.1">
 			</div>
-			<div class="inputContainer"></div>
 			<div class="inputContainer">
 				<Button id="Manual">Drop Ball</Button>
+			</div>
+			<div class="inputContainer">
+				<div class="title" style="text-align: center;">ON / OFF</div>
+				<label class="switch">
+					<input id="OnOff" type="checkbox">
+					<span class="slider round"></span>
+				</label>
 			</div>
 			<div class="inputContainer">
 				<div class="title">Subscriber </div>

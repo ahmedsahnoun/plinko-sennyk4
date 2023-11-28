@@ -84,7 +84,7 @@ textarea {
   padding: 10px;
   background-color: rgb(226, 73, 73);
   color: white; */
-  
+
   margin: auto;
   background-color: #720b0b;
   border: 0.125em solid #a72222;
@@ -261,6 +261,10 @@ textarea {
       background-color: rgb(10, 31, 148);
     }
   }
+}
+
+.invalidToken {
+  box-shadow: 0 0 10px 10px red;
 }
 
 /* scroll bar */

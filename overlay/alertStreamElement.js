@@ -10,6 +10,10 @@ function subscription() {
 		socket.emit('authenticate', { method: 'jwt', token: token })
 	})
 
+	// socket.on('unauthorized', () => {
+	// 	console.log("shit")
+	// })
+
 	socket.on('event', (data) => {
 		amount = data.data.amount
 		if (data.type == 'subscriber') {

@@ -52,7 +52,7 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	TwitchToken = snapVal.TwitchToken
 	TwitchClientId = snapVal.TwitchClientId
 	if (socket) socket.close()
-	subscription()
+	if (snapVal.OnOff) subscription()
 
 })
 

@@ -12,9 +12,25 @@ const tokenInput = document.getElementById("token")
 const idleInput = document.getElementById("idle")
 const intervalInput = document.getElementById("interval")
 const saveButton = document.getElementById("saveButton")
+const OnOff = document.getElementById("OnOff")
 var TwitchToken = null
 var TwitchClientId = null
 var subTypes = null
+
+function checkToken(token) {
+	const options = {
+		method: 'GET',
+		headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token }
+	};
+
+	fetch('https://api.streamelements.com/kappa/v2/users/current', options)
+		.then(res => {
+			if (res.status !== 200)
+				document.getElementById("token").classList.add("invalidToken")
+			else
+				document.getElementById("token").classList.remove("invalidToken")
+		})
+}
 
 try {
 	const firebaseConfig = JSON.parse(atob(localStorage.getItem("config")))
@@ -33,7 +49,7 @@ try {
 	}
 
 	document.getElementById("Manual").onclick = ManualSubmission
-	
+
 	document.getElementById("clearButton").onclick = clearSubmissions
 
 	function removeSubmission(id) {
@@ -80,6 +96,7 @@ try {
 		intervalInput.value = snapVal.interval / 1000
 		TwitchToken = snapVal.TwitchToken
 		TwitchClientId = snapVal.TwitchClientId
+		OnOff.checked = snapVal.OnOff
 
 		// subTypes
 		subTypes = snapVal.subTypes
@@ -88,8 +105,14 @@ try {
 				if (j === "active" || j === "multiple") document.getElementById(i + '_' + j).checked = snapVal.subTypes[i][j]
 				else document.getElementById(i + '_' + j).value = snapVal.subTypes[i][j]
 		}
+
+		checkToken(snapVal.token)
 	})
 
+	// turn on and off
+	OnOff.onchange = () => set(ref(database, "SettingsDB/OnOff"), OnOff.checked)
+
+	// save all parameters
 	saveButton.onclick = () => {
 
 		options = []
@@ -112,6 +135,7 @@ try {
 			subTypes: subTypes,
 			TwitchClientId: TwitchClientId,
 			TwitchToken: TwitchToken,
+			OnOff: OnOff.checked,
 		}
 		updateSettings(savedData)
 	}
