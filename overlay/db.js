@@ -25,6 +25,13 @@ function updateSettings(data) {
 	set(ref(database, "SettingsDB"), data)
 }
 
+async function updateTwitchToken() {
+	const nameToken = "w7lwaxc73n49y6etcp2w3o4uipbvcudiqse6zngiybmkstawl9"
+	const rawRefreshTokenData = await fetch('https://twitchtokengenerator.com/api/refresh/' + nameToken)
+	const RefreshTokenData = await rawRefreshTokenData.json()
+	set(ref(database, "SettingsDB/TwitchToken"), RefreshTokenData.token)
+}
+
 // settings listener
 onValue(ref(database, "SettingsDB"), (snap) => {
 	const snapVal = snap.val()
@@ -65,4 +72,4 @@ onValue(ref(database, "Manual"), (snap) => {
 	}
 })
 
-export { addSubmission, removeSubmission, updateSettings }
+export { addSubmission, removeSubmission, updateSettings, updateTwitchToken }

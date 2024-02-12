@@ -13,7 +13,17 @@ function Particle(x, y, r, name, hue) {
   this.hue = hue || "#999999";
   this.body.collisionFilter.category = 2
   this.body.collisionFilter.mask = 1
+  // this.img = loadImage("plink.gif")
+
   World.add(world, this.body);
+
+  // for gif
+  this.div = createDiv();
+  this.div.position(x - 0.9 * r, y - 0.9 * r);
+  this.div.style('z-index', '2')
+  var img = createImg("plinko.gif")
+  img.size(1.8 * r, 1.8 * r)
+  img.parent(this.div);
 }
 
 Particle.prototype.isOffScreen = function () {
@@ -30,6 +40,10 @@ Particle.prototype.landed = function (h) {
 
 Particle.prototype.show = function () {
   var pos = this.body.position;
+
+  // for gif
+  this.div.position(pos.x - 0.9 * this.r, pos.y - 2.9 * this.r)
+
   fill(this.hue);
   noStroke();
 
@@ -37,6 +51,13 @@ Particle.prototype.show = function () {
   translate(pos.x, pos.y);
   ellipse(0, 0, this.r * 2);
   pop();
+
+  // // for image
+  // push();
+  // translate(pos.x, pos.y);
+  // imageMode(CENTER);
+  // image(this.img, 0, 0, this.r * 2, this.r * 2); // Draw the image
+  // pop();
 
   push();
   textStyle(BOLD)

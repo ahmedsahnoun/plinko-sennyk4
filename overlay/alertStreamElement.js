@@ -64,7 +64,8 @@ function subscription() {
 	});
 }
 
-function generateBall(channelName) {
+function generateBall(channelName, tries = 0) {
+	if (tries > 5) return
 	headers = {
 		'Client-ID': TwitchClientId,
 		'Authorization': `Bearer ${TwitchToken}`,
@@ -88,8 +89,14 @@ function generateBall(channelName) {
 			}).then(response => response.json())
 				.then(response => {
 					queue.push({ name: response.data[0].user_name, color: response.data[0].color })
-				}).catch(() => { queue.push({ name: channelName }) })
-		}).catch(() => { queue.push({ name: channelName }) })
+				}).catch(async () => {
+					await updateTwitchTokenFunction()
+					generateBall(channelName, tries + 1)
+				})
+		}).catch(async () => {
+			await updateTwitchTokenFunction()
+			generateBall(channelName, tries + 1)
+		})
 }
 
 function getGifter(channel) {

@@ -1,13 +1,15 @@
 var SubAdd = null
 var SettingsUpdate = null
+var updateTwitchTokenFunction = null
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const module = await import('./db.js');
-    const { addSubmission, updateSettings } = module;
+    const { addSubmission, updateSettings, updateTwitchToken } = module;
 
     SubAdd = addSubmission
     SettingsUpdate = updateSettings
+    updateTwitchTokenFunction = updateTwitchToken
 
   } catch (error) {
     console.error("Error loading module:", error);
@@ -129,6 +131,7 @@ function draw() {
 }
 
 function removeParticle(i) {
+  particles[i].particle.div.remove()
   World.remove(world, particles[i].particle.body);
   particlesCounter--
 }
