@@ -117,7 +117,12 @@ function draw() {
       step = (width / options.length)
       index = Math.floor(particles[i].particle.body.position.x / step)
       colorIndex = index < 6 ? index : 11 - index
-      SubAdd({ name: particles[i].particle.name, color: colorGradiant[colorIndex], option: options[index] })
+      SubAdd({
+        name: particles[i].particle.name,
+        color: colorGradiant[colorIndex],
+        option: options[index],
+        date: new Date().toLocaleString(),
+      })
       removeParticle(i)
       if (particlesCounter === 0) {
         particles = []

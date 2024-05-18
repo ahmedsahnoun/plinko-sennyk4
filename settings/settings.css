@@ -150,6 +150,10 @@ textarea {
   }
 }
 
+.date {
+  text-align: right;
+}
+
 #optionFields {
   grid-area: optionFields;
   display: grid;

@@ -70,6 +70,7 @@ try {
 			<div class="request">
 				<h2 style="color:${snapVal[i].color};">${snapVal[i].option}</h1>
 				<div>${snapVal[i].name}</div>
+				<div class="date">${snapVal[i].date ?? ""}</div>
 				<div  data-key="${i}" class="delete">X</div>
 			</div>` + submissions.innerHTML
 		}
