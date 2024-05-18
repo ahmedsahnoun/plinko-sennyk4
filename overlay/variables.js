@@ -5,6 +5,7 @@ var subTypes = null
 var TwitchToken = null
 var TwitchClientId = null
 var timeoutId = null
+var streamer = null
 
 var token = null
 

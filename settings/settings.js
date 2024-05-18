@@ -16,6 +16,7 @@ const OnOff = document.getElementById("OnOff")
 var TwitchToken = null
 var TwitchClientId = null
 var subTypes = null
+var streamer = ""
 
 function checkToken(token) {
 	const options = {
@@ -98,6 +99,7 @@ try {
 		TwitchToken = snapVal.TwitchToken
 		TwitchClientId = snapVal.TwitchClientId
 		OnOff.checked = snapVal.OnOff
+		streamer = snapVal.name
 
 		// subTypes
 		subTypes = snapVal.subTypes
@@ -137,6 +139,7 @@ try {
 			TwitchClientId: TwitchClientId,
 			TwitchToken: TwitchToken,
 			OnOff: OnOff.checked,
+			name: streamer,
 		}
 		updateSettings(savedData)
 	}

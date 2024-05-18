@@ -58,6 +58,7 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	token = snapVal.token
 	TwitchToken = snapVal.TwitchToken
 	TwitchClientId = snapVal.TwitchClientId
+	streamer = snapVal.name
 	if (socket) socket.close()
 	if (snapVal.OnOff) subscription()
 
@@ -67,7 +68,7 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 onValue(ref(database, "Manual"), (snap) => {
 	const snapVal = snap.val()
 	if (snapVal) {
-		generateBall("SennyK4")
+		generateBall(streamer ?? "SennyK4")
 		set(ref(database, "Manual"), false)
 	}
 })
