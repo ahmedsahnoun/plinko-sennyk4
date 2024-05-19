@@ -77,9 +77,9 @@ export { addSubmission, removeSubmission, updateSettings, updateTwitchToken }
 
 
 
-SubAdd = addSubmission
-SettingsUpdate = updateSettings
-updateTwitchTokenFunction = updateTwitchToken
+var SubAdd = addSubmission
+var SettingsUpdate = updateSettings
+var updateTwitchTokenFunction = updateTwitchToken
 
 function preload() {
 	ding = loadSound('ding.mp3');
