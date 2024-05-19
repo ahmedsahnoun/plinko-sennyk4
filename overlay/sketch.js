@@ -11,9 +11,10 @@ async function onready () {
     SettingsUpdate = updateSettings
     updateTwitchTokenFunction = updateTwitchToken
 
-    setTimeout(onready,2000);
+
   } catch (error) {
-    console.error("Error loading module:", error);
+    console.error("Error loading module:", error);    
+    setTimeout(onready,2000);
   }
 };
 setTimeout(onready,2000);
