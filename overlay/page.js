@@ -12,9 +12,7 @@ const isElementLoaded = async selector => {
 	return document.querySelector(selector);
 };
 
-
-
-setTimeout(() => isElementLoaded("canvas").then(() => {
+isElementLoaded("canvas").then(() => {
 	var textOption = ""
 	for (let option in options) {
 		var colorIndex = option < 6 ? option : 11 - option
@@ -23,6 +21,3 @@ setTimeout(() => isElementLoaded("canvas").then(() => {
 	optionsText.innerHTML = textOption
 	reconstruct()
 })
-
-	, 2000)
-
