@@ -2,7 +2,7 @@ var SubAdd = null
 var SettingsUpdate = null
 var updateTwitchTokenFunction = null
 
-
+onReady();
 if (document.readyState !== "loading") {
   onReady(); // Or setTimeout(onReady, 0); if you want it consistently async
 } else {
