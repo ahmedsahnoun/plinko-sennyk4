@@ -1,29 +1,20 @@
 var SubAdd = null
 var SettingsUpdate = null
 var updateTwitchTokenFunction = null
-var loaded = false
 
-async function onReady() {
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-    if(!loaded ){
-      const module = await import('./db.js');
-      const { addSubmission, updateSettings, updateTwitchToken } = module;
+    const module = await import('./db.js');
+    const { addSubmission, updateSettings, updateTwitchToken } = module;
 
-      SubAdd = addSubmission
-      SettingsUpdate = updateSettings
-      updateTwitchTokenFunction = updateTwitchToken
-      loaded=true
-    }
+    SubAdd = addSubmission
+    SettingsUpdate = updateSettings
+    updateTwitchTokenFunction = updateTwitchToken
 
   } catch (error) {
     console.error("Error loading module:", error);
-    loaded = false
   }
-  setTimeout(onReady,2000);
-};
-
-setTimeout(onReady,2000);
-
+});
 
 function preload() {
   ding = loadSound('ding.mp3');

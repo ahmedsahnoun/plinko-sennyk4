@@ -19,5 +19,5 @@ isElementLoaded("canvas").then(() => {
 		textOption += /*html*/`<div style="background-color:${colorGradiant[colorIndex]};" >${Number(option) + 1}</div>`
 	}
 	optionsText.innerHTML = textOption
-	reconstruct()
+	//reconstruct()
 })

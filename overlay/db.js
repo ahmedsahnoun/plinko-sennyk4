@@ -72,5 +72,5 @@ onValue(ref(database, "Manual"), (snap) => {
 		set(ref(database, "Manual"), false)
 	}
 })
-
+reconstruct()
 export { addSubmission, removeSubmission, updateSettings, updateTwitchToken }
