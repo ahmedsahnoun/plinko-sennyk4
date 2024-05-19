@@ -20,5 +20,4 @@ isElementLoaded("canvas").then(() => {
 	}
 	optionsText.innerHTML = textOption
 	reconstruct()
-	onReady()
 })

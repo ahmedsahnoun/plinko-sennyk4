@@ -4,7 +4,7 @@ var updateTwitchTokenFunction = null
 
 onReady();
 if (document.readyState !== "loading") {
-  onReady(); // Or setTimeout(onReady, 0); if you want it consistently async
+  onReady(); 
 } else {
   document.addEventListener("DOMContentLoaded", onReady);
 };
