@@ -2,8 +2,7 @@ var SubAdd = null
 var SettingsUpdate = null
 var updateTwitchTokenFunction = null
 
-
-setTimeout(async ()=> {
+document.addEventListener("DOMContentLoaded", async () => {
   try {
     const module = await import('./db.js');
     const { addSubmission, updateSettings, updateTwitchToken } = module;
@@ -14,7 +13,8 @@ setTimeout(async ()=> {
 
   } catch (error) {
     console.error("Error loading module:", error);
-  }}, 5000);
+  }
+});
 
 function preload() {
   ding = loadSound('ding.mp3');
