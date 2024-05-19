@@ -1,85 +1,28 @@
+var SubAdd = null
+var SettingsUpdate = null
+var updateTwitchTokenFunction = null
+var loaded = false
 
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js'
-import { getDatabase, ref, onValue, push as addDB, remove, set } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js'
-import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js'
+async function onReady() {
+  try {
+    if(!loaded ){
+      const module = await import('./db.js');
+      const { addSubmission, updateSettings, updateTwitchToken } = module;
 
-const urlParams = new URLSearchParams(window.location.search);
-const firebaseConfig = JSON.parse(atob(urlParams.get("key")))
+      SubAdd = addSubmission
+      SettingsUpdate = updateSettings
+      updateTwitchTokenFunction = updateTwitchToken
+      loaded=true
+    }
 
-const app = initializeApp(firebaseConfig)
-const database = getDatabase(app)
-const auth = getAuth(app)
-signInAnonymously(auth);
+  } catch (error) {
+    console.error("Error loading module:", error);
+    loaded = false
+  }
+  setTimeout(onReady,2000);
+};
 
-const submissionsDB = ref(database, "submissionsDB")
-
-function addSubmission(x) {
-	addDB(submissionsDB, x)
-}
-
-function removeSubmission(id) {
-	remove(ref(database, "submissionsDB/" + id))
-}
-
-function updateSettings(data) {
-	set(ref(database, "SettingsDB"), data)
-}
-
-async function updateTwitchToken() {
-	const nameToken = "w7lwaxc73n49y6etcp2w3o4uipbvcudiqse6zngiybmkstawl9"
-	const rawRefreshTokenData = await fetch('https://twitchtokengenerator.com/api/refresh/' + nameToken)
-	const RefreshTokenData = await rawRefreshTokenData.json()
-	set(ref(database, "SettingsDB/TwitchToken"), RefreshTokenData.token)
-}
-
-// settings listener
-onValue(ref(database, "SettingsDB"), (snap) => {
-	const snapVal = snap.val()
-
-	// queue
-	clearInterval(queueLauncher)
-	queueLauncher = setInterval(() => {
-		if (queue.length) {
-			const i = queue.shift()
-			newParticle(i.name, i.color)
-		}
-	}, snapVal.interval)
-
-	// idle
-	idleTimer = snapVal.idle
-
-	// options
-	options = snapVal.options
-
-	//subTypes
-	subTypes = snapVal.subTypes
-
-	//token
-	token = snapVal.token
-	TwitchToken = snapVal.TwitchToken
-	TwitchClientId = snapVal.TwitchClientId
-	streamer = snapVal.name
-	if (socket) socket.close()
-	if (snapVal.OnOff) subscription()
-
-})
-
-//Manual listener
-onValue(ref(database, "Manual"), (snap) => {
-	const snapVal = snap.val()
-	if (snapVal) {
-		generateBall(streamer ?? "SennyK4")
-		set(ref(database, "Manual"), false)
-	}
-})
-
-export { addSubmission, removeSubmission, updateSettings, updateTwitchToken }
-
-
-var SubAdd = addSubmission
-var SettingsUpdate = updateSettings
-var updateTwitchTokenFunction = updateTwitchToken
-
+setTimeout(onReady,2000);
 
 
 function preload() {
