@@ -1,4 +1,4 @@
-
+document.getElementById("displayText").innerText="TEST db.js";	
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js'
 import { getDatabase, ref, onValue, push as addDB, remove, set } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js'
 import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js'
@@ -10,6 +10,7 @@ const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
 const auth = getAuth(app)
 signInAnonymously(auth);
+
 
 const submissionsDB = ref(database, "submissionsDB")
 
@@ -58,9 +59,12 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	token = snapVal.token
 	TwitchToken = snapVal.TwitchToken
 	TwitchClientId = snapVal.TwitchClientId
+	streamer= "Sennyk4"
 	streamer = snapVal.name
 	if (socket) socket.close()
 	if (snapVal.OnOff) subscription()
+
+	document.getElementById("displayText").innerText=streamer;	
 
 })
 
@@ -68,7 +72,7 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 onValue(ref(database, "Manual"), (snap) => {
 	const snapVal = snap.val()
 	if (snapVal) {
-		generateBall(streamer ?? "SennyK4")
+		generateBall(streamer)
 		set(ref(database, "Manual"), false)
 	}
 })

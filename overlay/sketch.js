@@ -2,22 +2,22 @@ var SubAdd = null
 var SettingsUpdate = null
 var updateTwitchTokenFunction = null
 
-async function onready () {
-  try {
-    const module = await import('./db.js');
-    const { addSubmission, updateSettings, updateTwitchToken } = module;
+function onready() {
+  import('./db.js')
+    .then(module => {
+      const { addSubmission, updateSettings, updateTwitchToken } = module;
 
-    SubAdd = addSubmission
-    SettingsUpdate = updateSettings
-    updateTwitchTokenFunction = updateTwitchToken
+      SubAdd = addSubmission;
+      SettingsUpdate = updateSettings;
+      updateTwitchTokenFunction = updateTwitchToken;
+    })
+    .catch(error => {
+      console.error("Error loading module:", error);
+      document.getElementById("displayText").innerText = error.stack;
+    });
+}
 
-
-  } catch (error) {
-    console.error("Error loading module:", error);    
-    setTimeout(onready,2000);
-  }
-};
-setTimeout(onready,2000);
+document.addEventListener('DOMContentLoaded', onready);
 function preload() {
   ding = loadSound('ding.mp3');
 }
