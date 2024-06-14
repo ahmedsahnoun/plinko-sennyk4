@@ -1,9 +1,13 @@
-function Plinko(x, y, r) {
+function Plinko(x, y, r,i=-1,j=-1) {
   var options = {
     restitution: 1,
     friction: 0,
     isStatic: true
   }
+  this.x = x
+  this.y = y
+  this.i=i
+  this.j=j
   this.body = Bodies.circle(x, y, r, options);
   this.body.label = "plinko";
   this.r = r;
