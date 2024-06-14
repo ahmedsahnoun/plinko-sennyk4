@@ -54,7 +54,7 @@ function readSubmissions() {
 			submissions.innerHTML = /*html*/`
 			<div class="request">
 			<h2 style="color:${i.color};">${i.option}</h1>
-			
+			<div>${i.name}</div>
 			</div>` + submissions.innerHTML
 			counter++
 		}

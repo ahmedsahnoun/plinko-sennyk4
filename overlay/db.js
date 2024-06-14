@@ -58,7 +58,8 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 	queueLauncher = setInterval(() => {
 		if (queue.length) {
 			const i = queue.shift()
-			newParticle(i.name, i.color)
+			var goal = generateNumber()
+			newParticle(i.name, i.color,goal)
 		}
 	}, snapVal.interval)
 
@@ -102,5 +103,32 @@ onValue(ref(database, "Manual"), (snap) => {
 		set(ref(database, "Manual"), false)
 	}
 })
+
+
+function gaussianRandom(mean = 0, stdev = 1) {
+	let u = 1 - Math.random();
+	let v = Math.random();
+	let z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+	// Adjust the Gaussian variable with mean and standard deviation
+	return z * stdev + mean;
+}
+  
+function boundedGaussianRandom(min, max, mean, stdev) {
+	let num;
+	do {
+		num = gaussianRandom(mean, stdev);
+	} while (num < min || num > max);
+	return Math.round(num);
+}
+  
+function generateNumber() {
+	const min = 1;
+	const max = 12;
+	const mean = 6;
+	const stdev = 2; // Adjust the standard deviation to fit most numbers within [1, 12]
+
+	return boundedGaussianRandom(min, max, mean, stdev);
+}
+
 
 export { addSubmission, removeSubmission, updateSettings, updateTwitchToken }

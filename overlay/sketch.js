@@ -74,7 +74,7 @@ function setup() {
       //   var i2 = 0
       //   var j2 = j+1;
       //   var x2 = (width / 2 - (j2- 1) * spacing / 2) + i2 * spacing;
-      //   var y2 = 1080 - maxHeight  + (j2-1) * spacing /1.14;
+      //   var y2 = 1080 - maxHeight  + (j2-1) * spacing /heightwidthratio;
       //   var p2 = new Plinko((x+x2)/2, (y+y2)/2, plinkoRadius,0,0);
       //   plinkos.push(p2);
       // }
@@ -83,7 +83,7 @@ function setup() {
       //   var i2 = j
       //   var j2 = j+1;
       //   var x2 = (width / 2 - (j2- 1) * spacing / 2) + i2 * spacing;
-      //   var y2 = 1080 - maxHeight  + (j2-1) * spacing /1.14;
+      //   var y2 = 1080 - maxHeight  + (j2-1) * spacing /heightwidthratio;
       //   var p2 = new Plinko((x+x2)/2, (y+y2)/2, plinkoRadius,0,0);
       //   plinkos.push(p2);
       // }
@@ -145,11 +145,11 @@ function setup() {
   // Events.on(engine, 'collisionStart', collision);
 }
 
-function newParticle(name, color) {
+function newParticle(name, color,goal=6) {
   clearTimeout(timeoutId)
   document.getElementsByTagName('body')[0].style.setProperty("visibility", "visible")
   
-  var p = new Particle(start, 0, particleRadius, name, color);
+  var p = new Particle(start, 0, particleRadius, name, color,goal);
   particles.push({ particle: p, logged: false });
   particlesCounter++
 }
@@ -170,6 +170,7 @@ function draw() {
       step = (width / usedOptions.length)
       index = Math.floor(particles[i].particle.body.position.x / step)
       colorIndex = index < 6 ? index : 11 - index
+      // preseeds[index].seeds.push(particles[i].particle.shiftx)
       SubAdd({
         name: particles[i].particle.name,
         color: colorGradiant[colorIndex],
@@ -192,4 +193,39 @@ function removeParticle(i) {
   particles[i].particle.div.remove()
   World.remove(world, particles[i].particle.body);
   particlesCounter--
+}
+
+
+function gaussianRandom(mean = 0, stdev = 1) {
+	let u = 1 - Math.random();
+	let v = Math.random();
+	let z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+	// Adjust the Gaussian variable with mean and standard deviation
+	return z * stdev + mean;
+}
+  
+function boundedGaussianRandom(min, max, mean, stdev) {
+	let num;
+	do {
+		num = gaussianRandom(mean, stdev);
+	} while (num < min || num > max);
+	return Math.round(num);
+}
+  
+function generateNumber() {
+	const min = 1;
+	const max = 12;
+	const mean = 6;
+	const stdev = 2; // Adjust the standard deviation to fit most numbers within [1, 12]
+
+	return boundedGaussianRandom(min, max, mean, stdev);
+}
+function testGenerator()
+{
+  var dist = [0,0,0,0,0,0,0,0,0,0,0,0]
+  for(let i =0; i<500; i++) {
+    var num = generateNumber()
+    dist[num-1] = dist[num-1] + 1
+  }
+  console.log(dist)
 }

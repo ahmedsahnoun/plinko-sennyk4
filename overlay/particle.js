@@ -1,12 +1,19 @@
-function Particle(x, y, r, name, hue) {
+function Particle(x, y, r, name, hue,goal) {
   this.hue = random(360);
+  // r  = r + Math.random() 
   var options = {
     restitution: 0.3,
     friction: 0,
     density: 0.8
   }
   this.startX = start
-  x += random(-4, 4);
+  // this.shiftx =  random(-4, 4) + Math.random()*1.5 - Math.random()*1.5
+  // this.shiftx = this.shiftx.toFixed(5)
+  var seeds = preseeds[goal-1].seeds
+  this.shiftx = seeds[ Math.floor(Math.random() * seeds.length) ]
+  x += this.shiftx
+  // x +=-2.2
+
   this.body = Bodies.circle(x, y, r, options);
   this.body.label = "particle";
   this.r = r;

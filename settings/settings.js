@@ -2,7 +2,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.3.1/firebas
 import { getDatabase, ref, onValue, push as addDB, remove, set } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js'
 import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js'
 
-
+var redeemedSubs = [0,0,0,0,0,0,0,0,0,0,0,0]
 var options = []
 for (let i = 1; i <= 12; i++) { options.push(`option ${i}`) }
 
@@ -67,7 +67,9 @@ try {
 	onValue(submissionsDB, (snap) => {
 		submissions.innerHTML = ""
 		const snapVal = snap.val()
+		redeemedSubs = [0,0,0,0,0,0,0,0,0,0,0,0]
 		for (let i in snapVal) {
+			redeemedSubs[ parseInt(snapVal[i].option) ] = redeemedSubs[ parseInt(snapVal[i].option) ]  + 1
 			submissions.innerHTML = /*html*/`
 			<div class="request">
 				<h2 style="color:${snapVal[i].color};">${snapVal[i].option}</h1>
@@ -77,6 +79,7 @@ try {
 			</div>` + submissions.innerHTML
 		}
 		for (let i of document.getElementsByClassName("delete")) i.onclick = removeSubmission
+		console.log(redeemedSubs)
 	})
 
 	// settings listener
@@ -156,3 +159,4 @@ catch (error) {
 		location.reload()
 	}
 }
+
