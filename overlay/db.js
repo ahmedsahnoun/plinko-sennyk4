@@ -52,13 +52,16 @@ async function updateTwitchToken() {
 // settings listener
 onValue(ref(database, "SettingsDB"), (snap) => {
 	const snapVal = snap.val()
-
+	pity = (typeof snapVal.pityBoard !== 'undefined') ? snapVal.pityBoard : false;
+	imgLink = (typeof snapVal.img !== 'undefined') ? snapVal.img : "plinko.gif";
 	// queue
 	clearInterval(queueLauncher)
 	queueLauncher = setInterval(() => {
 		if (queue.length) {
 			const i = queue.shift()
 			var goal = generateNumber()
+			if(pity)
+				goal = -1
 			newParticle(i.name, i.color,goal)
 		}
 	}, snapVal.interval)
@@ -68,7 +71,6 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 
 	// options
 	options = snapVal.options
-	pity = (typeof snapVal.pityBoard !== 'undefined') ? snapVal.pityBoard : false;
 	var newUsedOptions = []
     if (pity)
         newUsedOptions = options.slice(0, 4).concat(options.slice(-4))
@@ -131,4 +133,4 @@ function generateNumber() {
 }
 
 
-export { addSubmission, removeSubmission, updateSettings, updateTwitchToken }
+export { addSubmission, removeSubmission, updateSettings, updateTwitchToken,generateNumber }

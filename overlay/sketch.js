@@ -1,15 +1,17 @@
 var SubAdd = null
 var SettingsUpdate = null
 var updateTwitchTokenFunction = null
+var genNumber = null
 
 function onready() {
   import('./db.js')
     .then(module => {
-      const { addSubmission, updateSettings, updateTwitchToken } = module;
+      const { addSubmission, updateSettings, updateTwitchToken,generateNumber } = module;
 
       SubAdd = addSubmission;
       SettingsUpdate = updateSettings;
       updateTwitchTokenFunction = updateTwitchToken;
+      genNumber = generateNumber
     })
     .catch(error => {
       console.error("Error loading module:", error);
@@ -145,7 +147,7 @@ function setup() {
   // Events.on(engine, 'collisionStart', collision);
 }
 
-function newParticle(name, color,goal=6) {
+function newParticle(name, color,goal=-1) {
   clearTimeout(timeoutId)
   document.getElementsByTagName('body')[0].style.setProperty("visibility", "visible")
   
@@ -170,7 +172,8 @@ function draw() {
       step = (width / usedOptions.length)
       index = Math.floor(particles[i].particle.body.position.x / step)
       colorIndex = index < 6 ? index : 11 - index
-      // preseeds[index].seeds.push(particles[i].particle.shiftx)
+      if(particles[i].particle.goal==-1 && !pity)
+        preseeds[index].seeds.push(particles[i].particle.shiftx)
       SubAdd({
         name: particles[i].particle.name,
         color: colorGradiant[colorIndex],
@@ -196,35 +199,11 @@ function removeParticle(i) {
 }
 
 
-function gaussianRandom(mean = 0, stdev = 1) {
-	let u = 1 - Math.random();
-	let v = Math.random();
-	let z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-	// Adjust the Gaussian variable with mean and standard deviation
-	return z * stdev + mean;
-}
-  
-function boundedGaussianRandom(min, max, mean, stdev) {
-	let num;
-	do {
-		num = gaussianRandom(mean, stdev);
-	} while (num < min || num > max);
-	return Math.round(num);
-}
-  
-function generateNumber() {
-	const min = 1;
-	const max = 12;
-	const mean = 6;
-	const stdev = 2; // Adjust the standard deviation to fit most numbers within [1, 12]
-
-	return boundedGaussianRandom(min, max, mean, stdev);
-}
-function testGenerator()
+function testgenerator()
 {
   var dist = [0,0,0,0,0,0,0,0,0,0,0,0]
   for(let i =0; i<500; i++) {
-    var num = generateNumber()
+    var num = genNumber()
     dist[num-1] = dist[num-1] + 1
   }
   console.log(dist)
