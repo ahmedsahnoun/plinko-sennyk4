@@ -67,7 +67,7 @@ onValue(ref(database, "SettingsDB"), (snap) => {
 
 	// options
 	options = snapVal.options
-	pity = (typeof snapVal.pity !== 'undefined') ? snapVal.pity : false;
+	pity = (typeof snapVal.pityBoard !== 'undefined') ? snapVal.pityBoard : false;
 	var newUsedOptions = []
     if (pity)
         newUsedOptions = options.slice(0, 4).concat(options.slice(-4))

@@ -26,6 +26,7 @@ for (let i = 1; i < 13; i++) { options.push(`option ${i}`) }
 var usedOptions = options
 colorGradiant = ["#ff2400", "#ff4900", "#ff6d00", "#ff9200", "#ffb600", "#ffdb00"]
 // var rows = 13;
+var heightwidthratio = 1.1
 var particleRadius = 35;
 var plinkoRadius = 3;
 var boundryHeight = 50;

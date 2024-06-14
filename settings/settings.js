@@ -13,6 +13,7 @@ const idleInput = document.getElementById("idle")
 const intervalInput = document.getElementById("interval")
 const saveButton = document.getElementById("saveButton")
 const OnOff = document.getElementById("OnOff")
+const pityBoard =  document.getElementById("pityBoard")
 var TwitchToken = null
 var TwitchClientId = null
 var subTypes = null
@@ -99,6 +100,7 @@ try {
 		TwitchToken = snapVal.TwitchToken
 		TwitchClientId = snapVal.TwitchClientId
 		OnOff.checked = snapVal.OnOff
+		pityBoard.checked  = snapVal.pityBoard
 		streamer = snapVal.name
 
 		// subTypes
@@ -114,6 +116,7 @@ try {
 
 	// turn on and off
 	OnOff.onchange = () => set(ref(database, "SettingsDB/OnOff"), OnOff.checked)
+	pityBoard.onchange = () => set(ref(database, "SettingsDB/pityBoard"), pityBoard.checked)
 
 	// save all parameters
 	saveButton.onclick = () => {
@@ -139,6 +142,7 @@ try {
 			TwitchClientId: TwitchClientId,
 			TwitchToken: TwitchToken,
 			OnOff: OnOff.checked,
+			pityBoard: pityBoard.checked,
 			name: streamer,
 		}
 		updateSettings(savedData)

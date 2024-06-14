@@ -59,14 +59,34 @@ function setup() {
   frameRate(30)
   world.gravity.y = 1.8;
   spacing = (width / usedOptions.length - 0.8)// * 12 / options.length
-  particleRadius  = spacing /2 - plinkoRadius*2
-  var maxHeight = (usedOptions.length +1.3 ) * spacing /1.14
+  // plinkoRadius = spacing/30;
+  particleRadius  = spacing /2 - plinkoRadius*1.5
+  var maxHeight = (usedOptions.length +1.3 ) * spacing /heightwidthratio
   for (let j = 2; j <= usedOptions.length+1; j++) {
     for (let i = 0; i < j; i++) {
       var x = (width / 2 - (j - 1) * spacing / 2) + i * spacing;
-      var y = 1080 - maxHeight  + (j-1) * spacing /1.14;
+      var y = 1080 - maxHeight  + (j-1) * spacing /heightwidthratio;
       var p = new Plinko(x, y, plinkoRadius,i,j);
       plinkos.push(p);
+
+      // if(i == 0)
+      // {
+      //   var i2 = 0
+      //   var j2 = j+1;
+      //   var x2 = (width / 2 - (j2- 1) * spacing / 2) + i2 * spacing;
+      //   var y2 = 1080 - maxHeight  + (j2-1) * spacing /1.14;
+      //   var p2 = new Plinko((x+x2)/2, (y+y2)/2, plinkoRadius,0,0);
+      //   plinkos.push(p2);
+      // }
+      // if(i == j-1)
+      // {
+      //   var i2 = j
+      //   var j2 = j+1;
+      //   var x2 = (width / 2 - (j2- 1) * spacing / 2) + i2 * spacing;
+      //   var y2 = 1080 - maxHeight  + (j2-1) * spacing /1.14;
+      //   var p2 = new Plinko((x+x2)/2, (y+y2)/2, plinkoRadius,0,0);
+      //   plinkos.push(p2);
+      // }
     }
   }
 
