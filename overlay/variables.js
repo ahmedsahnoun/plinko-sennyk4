@@ -34,6 +34,28 @@ var start = 0
 var ratio = 1080 / 1920
 var imgLink = "plinko.gif"
 
+var odds=
+[
+	3,
+	15,
+	37,
+	68,
+	80,
+	97,
+	97,
+	80,
+	68,
+	37,
+	15,
+	3
+]
+var gaussian = []
+for (let i = 0; i < odds.length; i++){
+	var num = odds[i]
+	for(let j=0; j < num; j++)
+		gaussian.push(i+1)
+}
+
 var preseeds = [
     {
         "option": 1,

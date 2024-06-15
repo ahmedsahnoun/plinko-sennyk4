@@ -199,10 +199,10 @@ function removeParticle(i) {
 }
 
 
-function testgenerator()
+function testgenerator(count=100)
 {
   var dist = [0,0,0,0,0,0,0,0,0,0,0,0]
-  for(let i =0; i<500; i++) {
+  for(let i =0; i<count; i++) {
     var num = genNumber()
     dist[num-1] = dist[num-1] + 1
   }
