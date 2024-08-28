@@ -53,6 +53,7 @@ async function updateTwitchToken() {
 onValue(ref(database, "SettingsDB"), (snap) => {
 	const snapVal = snap.val()
 	pity = (typeof snapVal.pityBoard !== 'undefined') ? snapVal.pityBoard : false;
+	odds = (typeof snapVal.odds !== 'undefined') ? snapVal.odds : [3,15,37,68,80,97,97,80,68,37,15,3];
 	imgLink = (typeof snapVal.img !== 'undefined') ? snapVal.img : "plinko.gif";
 	// queue
 	clearInterval(queueLauncher)
@@ -76,7 +77,13 @@ onValue(ref(database, "SettingsDB"), (snap) => {
         newUsedOptions = options.slice(0, 4).concat(options.slice(-4))
     else 
 	newUsedOptions = options
-    
+
+	gaussian = []
+	for (let i = 0; i < odds.length; i++){
+		var num = odds[i]
+		for(let j=0; j < num; j++)
+			gaussian.push(i+1)
+	}
 	//subTypes
 	subTypes = snapVal.subTypes
 

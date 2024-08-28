@@ -137,8 +137,16 @@
 		<div id="optionFields">
 		</div>
 		<button id="clearButton">Clear</button>
-		<div id="submissions">
+ 
+		<div class="list">		 
+			<div  class = "tab" >
+			<button class="tablinks" onclick="openTab(event, 0)">List</button>			
+			<button class="tablinks" onclick="openTab(event, 1)">Summary</button>
 		</div>
+			<div  class="submissions" id="submissions">	</div>
+			<div  class="submissions" id="Summary" style="display: none; visibility: hidden;">	</div>
+		</div>
+		
 	</div>
 	<div style="display: grid;place-content: center">
 		<button id="saveButton">SAVE</button>
@@ -147,3 +155,19 @@
 
 </html>
 <script type="module" src="settings.js"></script>
+<script>
+	function openTab(evt, indx) {
+		if (indx == 0){
+			document.getElementById("Summary").style.visibility = "hidden"
+			document.getElementById("Summary").style.display= "none"
+			document.getElementById("submissions").style.visibility = "visible"
+			document.getElementById("submissions").style.display= "flex"
+		}
+		if (indx == 1){
+			document.getElementById("submissions").style.visibility = "hidden"
+			document.getElementById("submissions").style.display= "none"
+			document.getElementById("Summary").style.visibility = "visible"
+			document.getElementById("Summary").style.display= "flex"
+		}
+	}
+</script>
