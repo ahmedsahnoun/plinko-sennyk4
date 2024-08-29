@@ -51,9 +51,51 @@ try {
 	function clearSubmissions() {
 		remove(ref(database, "submissionsDB"))
 	}
+	function resetOdds(){
+		const defaultOdds = [3,15,37,68,80,97,97,80,68,37,15,3]
+		for (let i = 0; i < 12; i++) {
+			var current = document.getElementById(`option ${i}`)
+			var chance = document.getElementById(`odds ${i}`)
+			chance.value = defaultOdds[i]
+		}
+		saveSettings()
+	}
+
+	function saveSettings(){
+
+		options = []
+		for (let i = 0; i < 12; i++) {
+			var current = document.getElementById(`option ${i}`)
+			var chance = document.getElementById(`odds ${i}`)
+			options.push(current.value)
+			odds[i] = chance.value
+		}
+	
+		for (let i in subTypes) {
+			for (let j in subTypes[i])
+				if (j === "active" || j === "multiple") subTypes[i][j] = document.getElementById(i + '_' + j).checked
+				else subTypes[i][j] = Number(document.getElementById(i + '_' + j).value)
+		}
+	
+	
+		const savedData = {
+			token: tokenInput.value,
+			idle: idleInput.value * 1000,
+			interval: intervalInput.value * 1000,
+			options: options,
+			subTypes: subTypes,
+			TwitchClientId: TwitchClientId,
+			TwitchToken: TwitchToken,
+			OnOff: OnOff.checked,
+			pityBoard: pityBoard.checked,
+			name: streamer,
+			odds: odds
+		}
+		updateSettings(savedData)
+	}
 
 	document.getElementById("Manual").onclick = ManualSubmission
-
+	document.getElementById("resetOdds").onclick = resetOdds
 	document.getElementById("clearButton").onclick = clearSubmissions
 
 	function removeSubmission(id) {
@@ -72,6 +114,15 @@ try {
 		set(submissionsDB, snapValSub)
 	}
 
+	function removeOldestSubmission(optionName){
+		for (let i in snapValSub){
+			if (snapValSub[i].option == optionName.target.dataset.key){
+				remove(ref(database, "submissionsDB/" + i ))
+				return
+			}
+		}
+	}
+
 	function updateSettings(data) {
 		set(ref(database, "SettingsDB"), data)
 	}
@@ -82,6 +133,7 @@ try {
 		summedEntries.innerHTML = ""
 		snapValSub = snap.val()
 		const summary = {};
+		const colors = {}
 		// redeemedSubs = [0,0,0,0,0,0,0,0,0,0,0,0]
 		for (let i in snapValSub) {
 			// redeemedSubs[ parseInt(snapValSub[i].option) ] = redeemedSubs[ parseInt(snapValSub[i].option) ]  + 1
@@ -96,6 +148,7 @@ try {
 			// Summed Entries Tab
 			if (!summary[snapValSub[i].option]) {
 				summary[snapValSub[i].option] = 1;
+				colors[snapValSub[i].option] = snapValSub[i].color
 			} else {
 				summary[snapValSub[i].option] += 1;
 			}
@@ -104,14 +157,16 @@ try {
 		for (let option in summary) {
 			summedEntries.innerHTML += /*html*/`
 			<div class="request">
-				<h2>${option}</h2>
+				<h2 style="color:${colors[option]};">${option}</h2>
 				<div>Count: ${summary[option]}</div>
+				<div  data-key="${option}" class="oldestdelete">-</div>
 				<div  data-key="${option}" class="massdelete">X</div>
 			</div>`;
 		}
 
 		for (let i of document.getElementsByClassName("delete")) i.onclick = removeSubmission
 		for (let i of document.getElementsByClassName("massdelete")) i.onclick = removeSubmissionGroup
+		for (let i of document.getElementsByClassName("oldestdelete")) i.onclick = removeOldestSubmission
 	})
 
 	// settings listener
@@ -159,38 +214,7 @@ try {
 	pityBoard.onchange = () => set(ref(database, "SettingsDB/pityBoard"), pityBoard.checked)
 
 	// save all parameters
-	saveButton.onclick = () => {
-
-		options = []
-		for (let i = 0; i < 12; i++) {
-			var current = document.getElementById(`option ${i}`)
-			var chance = document.getElementById(`odds ${i}`)
-			options.push(current.value)
-			odds[i] = chance.value
-		}
-
-		for (let i in subTypes) {
-			for (let j in subTypes[i])
-				if (j === "active" || j === "multiple") subTypes[i][j] = document.getElementById(i + '_' + j).checked
-				else subTypes[i][j] = Number(document.getElementById(i + '_' + j).value)
-		}
-
-
-		const savedData = {
-			token: tokenInput.value,
-			idle: idleInput.value * 1000,
-			interval: intervalInput.value * 1000,
-			options: options,
-			subTypes: subTypes,
-			TwitchClientId: TwitchClientId,
-			TwitchToken: TwitchToken,
-			OnOff: OnOff.checked,
-			pityBoard: pityBoard.checked,
-			name: streamer,
-			odds: odds
-		}
-		updateSettings(savedData)
-	}
+	saveButton.onclick = saveSettings
 }
 catch (error) {
 	console.log(error)
@@ -200,4 +224,5 @@ catch (error) {
 		location.reload()
 	}
 }
+
 
