@@ -59,6 +59,7 @@ try {
 			chance.value = defaultOdds[i]
 		}
 		saveSettings()
+		calcPerc()
 	}
 
 	function saveSettings(){
@@ -122,6 +123,20 @@ try {
 			}
 		}
 	}
+	function calcPerc(){
+		let sum =0 
+		let tempodds = [3,15,37,68,80,97,97,80,68,37,15,3]
+		for(let i=0;i<tempodds.length;i++){
+			tempodds[i] = document.getElementById("odds "+i).value 
+		}
+		for(let i=0;i<tempodds.length;i++){
+			sum = sum + parseInt(tempodds[i])
+		}
+
+		for(let i=0;i<odds.length;i++){
+			document.getElementById("percent "+i).textContent  =  (100*tempodds[i]/sum).toFixed(2)+"%";
+		}
+	}
 
 	function updateSettings(data) {
 		set(ref(database, "SettingsDB"), data)
@@ -173,16 +188,27 @@ try {
 	onValue(ref(database, "SettingsDB"), (snap) => {
 		const snapVal = snap.val()
 		odds = (typeof snapVal.odds !== 'undefined') ? snapVal.odds : [3,15,37,68,80,97,97,80,68,37,15,3]
+		const perc = [0,0,0,0,0,0,0,0,0,0,0,0]
 		if (odds.length<12)
 			odds =  [3,15,37,68,80,97,97,80,68,37,15,3]
+		let sum =0 
+		for(let i=0;i<odds.length;i++){
+			console.log(odds[i])
+			sum = sum + parseInt(odds[i])
+		}
+		for (let i=0;i<odds.length;i++)
+			perc[i] = (100* 	odds[i]/sum).toFixed(2);
 		// options
+
 		optionFields.innerHTML = ""
 		for (let i = 0; i < snapVal.options.length; i++) {
+			console.log(sum)
 			optionFields.innerHTML +=/*html*/`
 		<div class="inputContainer">
 			<div class="titleWithInput">
-				<div class="title">Option ${i + 1}. Odds: </div>
+				<div class="title">Option ${i + 1}. Odds:</div>
 				<input class="odds" id="odds ${i}" type="number" min="1" max="200" step="1" value=${odds[i]} >
+				<div class="percent" id="percent ${i}" > ${perc[i]}%</div>
 			</div>
 			<textarea id="option ${i}">${snapVal.options[i]}</textarea>
 		</div>`
@@ -205,6 +231,7 @@ try {
 				if (j === "active" || j === "multiple") document.getElementById(i + '_' + j).checked = snapVal.subTypes[i][j]
 				else document.getElementById(i + '_' + j).value = snapVal.subTypes[i][j]
 		}
+		for (let i of document.getElementsByClassName("odds")) i.onchange = calcPerc
 
 		checkToken(snapVal.token)
 	})
