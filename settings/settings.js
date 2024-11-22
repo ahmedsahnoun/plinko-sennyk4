@@ -62,6 +62,28 @@ try {
 		calcPerc()
 	}
 
+	function manualOption(){
+		var scroll = document.getElementById('add-option')
+		var optionindex = scroll.value-1
+		
+		var colorGradiant = ["#ff2400", "#ff4900", "#ff6d00", "#ff9200", "#ffb600", "#ffdb00"]
+		if (0<=optionindex &&optionindex<=11)
+		{
+			var colorIndex = optionindex < 6 ? optionindex : 11 - optionindex
+			var currentoption = document.getElementById(`option ${optionindex}`)
+			console.log(optionindex)
+			var x= {
+				name: streamer,
+				color: colorGradiant[colorIndex],
+				option: currentoption.value,
+				date: new Date().toLocaleString(),
+				}
+			addDB(submissionsDB, x)
+			// SubAdd()
+		}
+
+	}
+
 	function saveSettings(){
 
 		options = []
@@ -97,6 +119,8 @@ try {
 
 	document.getElementById("Manual").onclick = ManualSubmission
 	document.getElementById("resetOdds").onclick = resetOdds
+	document.getElementById("add-option-button").onclick = manualOption
+
 	document.getElementById("clearButton").onclick = clearSubmissions
 
 	function removeSubmission(id) {
@@ -251,5 +275,4 @@ catch (error) {
 		location.reload()
 	}
 }
-
 
